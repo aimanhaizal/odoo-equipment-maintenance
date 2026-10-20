@@ -2,8 +2,6 @@
 
 A portfolio project demonstrating custom module development for Odoo 17, with an equipment registry and maintenance request workflow.
 
-**GitHub repository:** https://github.com/aimanhaizal/odoo-equipment-maintenance
-
 ## Features
 
 - Equipment registry with unique serial-number validation
