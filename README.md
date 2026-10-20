@@ -139,4 +139,4 @@ Core equipment registry and maintenance request functionality is implemented. Fu
 
 ## License
 
-This repository's code is released under the **MIT License**. See [`LICENSE`](LICENSE). The Kaggle dataset is a separate work; refer to its source page for applicable terms.
+This repository's code is released under the **MIT License**. See [`LICENSE`](LICENSE). Odoo is a separate work; refer to its source page for applicable terms.
