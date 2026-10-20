@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_maintenance_request_portfolio_kanban"
+            model="ir.ui.view">
+        <field name="name">maintenance.request.portfolio.kanban</field>
+        <field name="model">maintenance.request.portfolio</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="technician_id"/>
+                <field name="priority"/>
+                <field name="deadline"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="fw-bold">
+                                <field name="name"/>
+                            </div>
+                            <div>
+                                Equipment:
+                                <field name="equipment_id"/>
+                            </div>
+                            <div>
+                                Technician:
+                                <field name="technician_id"/>
+                            </div>
+                            <div>
+                                Target date:
+                                <field name="deadline"/>
+                            </div>
+                            <div>
+                                Priority:
+                                <field name="priority"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_maintenance_request_portfolio_tree"
+            model="ir.ui.view">
+        <field name="name">maintenance.request.portfolio.tree</field>
+        <field name="model">maintenance.request.portfolio</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state == 'repaired'"
+                  decoration-danger="state == 'cancelled'">
+                <field name="name"/>
+                <field name="equipment_id"/>
+                <field name="technician_id"/>
+                <field name="priority" widget="priority"/>
+                <field name="deadline"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_maintenance_request_portfolio_form"
+            model="ir.ui.view">
+        <field name="name">maintenance.request.portfolio.form</field>
+        <field name="model">maintenance.request.portfolio</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start"
+                            type="object"
+                            string="Start Work"
+                            class="oe_highlight"
+                            invisible="state != 'new'"/>
+                    <button name="action_repaired"
+                            type="object"
+                            string="Mark Repaired"
+                            class="oe_highlight"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_cancel"
+                            type="object"
+                            string="Cancel"
+                            invisible="state in ('repaired', 'cancelled')"/>
+                    <button name="action_reset"
+                            type="object"
+                            string="Reset to New"
+                            invisible="state not in ('repaired', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,in_progress,repaired,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Pump overheating"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="equipment_id"/>
+                            <field name="technician_id"/>
+                        </group>
+                        <group>
+                            <field name="priority" widget="priority"/>
+                            <field name="deadline"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Problem">
+                            <field name="description"/>
+                        </page>
+                        <page string="Resolution">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_maintenance_request_portfolio"
+            model="ir.actions.act_window">
+        <field name="name">Maintenance Requests</field>
+        <field name="res_model">maintenance.request.portfolio</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <menuitem id="menu_maintenance_request_portfolio"
+              name="Maintenance Requests"
+              parent="menu_equipment_maintenance_root"
+              action="action_maintenance_request_portfolio"
+              sequence="20"/>
+</odoo>

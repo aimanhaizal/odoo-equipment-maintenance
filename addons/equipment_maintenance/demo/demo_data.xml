@@ -1,0 +1,25 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="equipment_demo_pump" model="maintenance.equipment.portfolio">
+        <field name="name">Demo Industrial Pump</field>
+        <field name="serial_number">DEMO-PUMP-001</field>
+        <field name="location">Factory Floor A</field>
+        <field name="notes">Demonstration equipment for the portfolio project.</field>
+    </record>
+
+    <record id="equipment_demo_compressor" model="maintenance.equipment.portfolio">
+        <field name="name">Demo Air Compressor</field>
+        <field name="serial_number">DEMO-COMP-001</field>
+        <field name="location">Workshop B</field>
+        <field name="notes">Demonstration equipment for maintenance workflow testing.</field>
+    </record>
+
+    <record id="maintenance_demo_request" model="maintenance.request.portfolio">
+        <field name="name">Inspect pump vibration</field>
+        <field name="equipment_id" ref="equipment_demo_pump"/>
+        <field name="description">Inspect bearings and mounting bolts.</field>
+        <field name="priority">2</field>
+        <field name="state">new</field>
+    </record>
+</odoo>

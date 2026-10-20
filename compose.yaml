@@ -1,0 +1,44 @@
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - equipment-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  web:
+    image: odoo:17.0
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8079:8069"
+    environment:
+      HOST: db
+      USER: ${POSTGRES_USER}
+      PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./addons:/mnt/extra-addons
+      - equipment-web-data:/var/lib/odoo
+    command:
+      - odoo
+      - -d
+      - equipment_dev
+      - --db_host=db
+      - --db_user=${POSTGRES_USER}
+      - --db_password=${POSTGRES_PASSWORD}
+      - --without-demo=all
+    restart: unless-stopped
+
+volumes:
+  equipment-db-data:
+  equipment-web-data:
