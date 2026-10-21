@@ -13,6 +13,12 @@ A portfolio project demonstrating custom module development for Odoo 17, with an
 - Demo XML data for equipment and maintenance requests
 - Automated tests for equipment creation and duplicate serial-number validation
 
+## Screenshots
+### List of Equipment Dash
+![List of Equipment](screenshorts/1.png)
+### Kaban Board Dash
+![Kaban Board](screenshorts/2.png)
+
 ## Application Dashboard
 
 The application runs in an isolated Docker Compose environment.
